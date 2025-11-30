@@ -142,37 +142,37 @@ export function PreOpChecklistForm() {
     <form onSubmit={handleSubmit} className="space-y-6">
       {/* Header */}
       <Card>
-        <CardHeader className="pb-3">
-          <CardTitle className="text-2xl font-bold flex items-center gap-2">
-            <span className="text-3xl">🔧</span>
+        <CardHeader className="pb-4">
+          <CardTitle className="text-2xl sm:text-3xl font-bold flex items-center gap-3">
+            <span className="text-4xl">🔧</span>
             Pre-Op Equipment Checklist
           </CardTitle>
-          <CardDescription className="text-sm">
-            Part XV - Materials Handling Equipment and Personnel Carrying Equipment
+          <CardDescription className="text-base mt-2">
+            Part XV - Materials Handling Equipment
             <br />
-            Sections 229.2 & 230.5 - Daily Safety Device Check
+            Sections 229.2 & 230.5 - Daily Safety Check
           </CardDescription>
         </CardHeader>
       </Card>
 
-      {/* Status Indicators */}
-      <div className="flex gap-2 flex-wrap">
+      {/* Status Indicators - Larger for gloves */}
+      <div className="flex gap-3 flex-wrap">
         <div
-          className={`px-3 py-1 rounded-full text-sm font-medium ${
+          className={`px-4 py-2 rounded-full text-base font-medium ${
             isOnline
-              ? "bg-green-500/20 text-green-400 border border-green-500/30"
-              : "bg-yellow-500/20 text-yellow-400 border border-yellow-500/30"
+              ? "bg-green-500/20 text-green-400 border-2 border-green-500/30"
+              : "bg-yellow-500/20 text-yellow-400 border-2 border-yellow-500/30"
           }`}
         >
           {isOnline ? "● Online" : "○ Offline"}
         </div>
         {pendingSubmissions.length > 0 && (
-          <div className="px-3 py-1 rounded-full text-sm font-medium bg-blue-500/20 text-blue-400 border border-blue-500/30">
+          <div className="px-4 py-2 rounded-full text-base font-medium bg-blue-500/20 text-blue-400 border-2 border-blue-500/30">
             {pendingSubmissions.length} pending sync
           </div>
         )}
         {!isConfigured && (
-          <div className="px-3 py-1 rounded-full text-sm font-medium bg-orange-500/20 text-orange-400 border border-orange-500/30">
+          <div className="px-4 py-2 rounded-full text-base font-medium bg-orange-500/20 text-orange-400 border-2 border-orange-500/30">
             Demo Mode
           </div>
         )}
@@ -181,21 +181,22 @@ export function PreOpChecklistForm() {
       {/* Basic Information */}
       <Card>
         <CardHeader>
-          <CardTitle className="text-lg">Basic Information</CardTitle>
+          <CardTitle className="text-xl">Basic Information</CardTitle>
         </CardHeader>
-        <CardContent className="space-y-4">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div className="space-y-2">
-              <Label htmlFor="date">Date</Label>
+        <CardContent className="space-y-6">
+          <div className="grid grid-cols-1 gap-6">
+            <div className="space-y-3">
+              <Label htmlFor="date" className="text-base font-semibold">Date</Label>
               <Input
                 id="date"
                 type="date"
                 value={formData.date}
                 onChange={(e) => handleInputChange("date", e.target.value)}
+                className="h-14 text-lg px-4"
               />
             </div>
-            <div className="space-y-2">
-              <Label htmlFor="employeeName">
+            <div className="space-y-3">
+              <Label htmlFor="employeeName" className="text-base font-semibold">
                 Employee Initials or Name <span className="text-destructive">*</span>
               </Label>
               <Input
@@ -204,142 +205,159 @@ export function PreOpChecklistForm() {
                 value={formData.employeeName}
                 onChange={(e) => handleInputChange("employeeName", e.target.value)}
                 required
+                className="h-14 text-lg px-4"
               />
             </div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div className="space-y-2">
-              <Label htmlFor="employeeId">Employee ID Number</Label>
+          <div className="grid grid-cols-1 gap-6">
+            <div className="space-y-3">
+              <Label htmlFor="employeeId" className="text-base font-semibold">Employee ID Number</Label>
               <Select
                 value={formData.employeeId}
                 onValueChange={(value) => handleInputChange("employeeId", value)}
               >
-                <SelectTrigger>
+                <SelectTrigger className="h-14 text-lg px-4">
                   <SelectValue placeholder="Select ID or 'I Don't Know'" />
                 </SelectTrigger>
                 <SelectContent>
                   {EMPLOYEE_IDS.map((id) => (
-                    <SelectItem key={id.value} value={id.value}>
+                    <SelectItem key={id.value} value={id.value} className="text-lg py-3">
                       {id.label}
                     </SelectItem>
                   ))}
                 </SelectContent>
               </Select>
             </div>
-            <div className="space-y-2">
-              <Label htmlFor="assetMake">
+            <div className="space-y-3">
+              <Label htmlFor="assetMake" className="text-base font-semibold">
                 Asset Make and Equipment Type <span className="text-destructive">*</span>
               </Label>
               <Input
                 id="assetMake"
-                placeholder="Describe as best as you can if unknown"
+                placeholder="Describe as best as you can"
                 value={formData.assetMake}
                 onChange={(e) => handleInputChange("assetMake", e.target.value)}
                 required
+                className="h-14 text-lg px-4"
               />
             </div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <div className="space-y-2">
-              <Label htmlFor="assetId">Asset ID Number</Label>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
+            <div className="space-y-3">
+              <Label htmlFor="assetId" className="text-base font-semibold">Asset ID Number</Label>
               <Input
                 id="assetId"
-                placeholder="Model number if unknown"
+                placeholder="Model # if unknown"
                 value={formData.assetId}
                 onChange={(e) => handleInputChange("assetId", e.target.value)}
+                className="h-14 text-lg px-4"
               />
             </div>
-            <div className="space-y-2">
-              <Label htmlFor="hours">Hours</Label>
+            <div className="space-y-3">
+              <Label htmlFor="hours" className="text-base font-semibold">Hours</Label>
               <Input
                 id="hours"
                 type="number"
                 placeholder="Equipment hours"
                 value={formData.hours}
                 onChange={(e) => handleInputChange("hours", e.target.value)}
+                className="h-14 text-lg px-4"
               />
             </div>
-            <div className="space-y-2">
-              <Label htmlFor="kilometers">Kilometers</Label>
+            <div className="space-y-3">
+              <Label htmlFor="kilometers" className="text-base font-semibold">Kilometers</Label>
               <Input
                 id="kilometers"
                 type="number"
-                placeholder="Vehicle kilometers"
+                placeholder="Vehicle km"
                 value={formData.kilometers}
                 onChange={(e) => handleInputChange("kilometers", e.target.value)}
+                className="h-14 text-lg px-4"
               />
             </div>
           </div>
         </CardContent>
       </Card>
 
-      {/* Items Inspected */}
+      {/* Items Inspected - Large touch targets */}
       <Card>
         <CardHeader>
-          <CardTitle className="text-lg">Items Inspected</CardTitle>
-          <CardDescription>Uncheck items that were not inspected</CardDescription>
+          <CardTitle className="text-xl">Items Inspected</CardTitle>
+          <CardDescription className="text-base">Uncheck items that were not inspected</CardDescription>
         </CardHeader>
         <CardContent>
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             {INSPECTION_ITEMS.map((item) => (
-              <div key={item.id} className="flex items-center space-x-2">
+              <label
+                key={item.id}
+                htmlFor={`inspected-${item.id}`}
+                className={`flex items-center gap-4 p-4 rounded-lg border-2 cursor-pointer transition-all active:scale-[0.98] ${
+                  formData.itemsInspected.includes(item.id)
+                    ? "bg-primary/10 border-primary"
+                    : "bg-muted/30 border-transparent hover:border-muted-foreground/20"
+                }`}
+              >
                 <Checkbox
                   id={`inspected-${item.id}`}
                   checked={formData.itemsInspected.includes(item.id)}
                   onCheckedChange={(checked) =>
                     handleInspectedToggle(item.id, checked as boolean)
                   }
+                  className="h-7 w-7 rounded-md"
                 />
-                <Label
-                  htmlFor={`inspected-${item.id}`}
-                  className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 cursor-pointer"
-                >
+                <span className="text-base font-medium flex-1">
                   {item.label}
-                </Label>
-              </div>
+                </span>
+              </label>
             ))}
           </div>
         </CardContent>
       </Card>
 
-      {/* Items Requiring Attention */}
-      <Card>
+      {/* Items Requiring Attention - Large touch targets */}
+      <Card className="border-warning/30">
         <CardHeader>
-          <CardTitle className="text-lg text-warning flex items-center gap-2">
-            ⚠️ Check Items That Require Attention
+          <CardTitle className="text-xl text-warning flex items-center gap-3">
+            <span className="text-2xl">⚠️</span>
+            Items Requiring Attention
           </CardTitle>
         </CardHeader>
-        <CardContent className="space-y-4">
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
+        <CardContent className="space-y-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             {INSPECTION_ITEMS.map((item) => (
-              <div key={item.id} className="flex items-center space-x-2">
+              <label
+                key={item.id}
+                htmlFor={`attention-${item.id}`}
+                className={`flex items-center gap-4 p-4 rounded-lg border-2 cursor-pointer transition-all active:scale-[0.98] ${
+                  formData.itemsRequiringAttention.includes(item.id)
+                    ? "bg-warning/20 border-warning"
+                    : "bg-muted/30 border-transparent hover:border-muted-foreground/20"
+                }`}
+              >
                 <Checkbox
                   id={`attention-${item.id}`}
                   checked={formData.itemsRequiringAttention.includes(item.id)}
                   onCheckedChange={(checked) =>
                     handleAttentionToggle(item.id, checked as boolean)
                   }
-                  className="border-warning data-[state=checked]:bg-warning data-[state=checked]:border-warning"
+                  className="h-7 w-7 rounded-md border-warning data-[state=checked]:bg-warning data-[state=checked]:border-warning"
                 />
-                <Label
-                  htmlFor={`attention-${item.id}`}
-                  className="text-sm font-medium leading-none cursor-pointer"
-                >
+                <span className="text-base font-medium flex-1">
                   {item.label}
-                </Label>
-              </div>
+                </span>
+              </label>
             ))}
           </div>
 
           {/* Show details for items requiring attention */}
           {showAttentionDetails && formData.itemsRequiringAttention.length > 0 && (
             <>
-              <Separator className="my-4" />
-              <div className="space-y-3">
-                <h4 className="font-medium text-sm text-muted-foreground">
-                  Inspection Guidelines for Selected Items:
+              <Separator className="my-6" />
+              <div className="space-y-4">
+                <h4 className="font-semibold text-base text-muted-foreground">
+                  Inspection Guidelines:
                 </h4>
                 {formData.itemsRequiringAttention.map((itemId) => {
                   const item = INSPECTION_ITEMS.find((i) => i.id === itemId);
@@ -347,10 +365,10 @@ export function PreOpChecklistForm() {
                   return (
                     <div
                       key={itemId}
-                      className="p-3 rounded-md bg-warning/10 border border-warning/20"
+                      className="p-4 rounded-lg bg-warning/10 border-2 border-warning/30"
                     >
-                      <h5 className="font-medium text-warning">{item.label}</h5>
-                      <p className="text-sm text-muted-foreground mt-1">
+                      <h5 className="font-semibold text-lg text-warning">{item.label}</h5>
+                      <p className="text-base text-muted-foreground mt-2 leading-relaxed">
                         {item.description}
                       </p>
                     </div>
@@ -362,14 +380,14 @@ export function PreOpChecklistForm() {
         </CardContent>
       </Card>
 
-      {/* Equipment Condition & Action */}
+      {/* Equipment Condition & Action - Large touch targets */}
       <Card>
         <CardHeader>
-          <CardTitle className="text-lg">Assessment</CardTitle>
+          <CardTitle className="text-xl">Assessment</CardTitle>
         </CardHeader>
-        <CardContent className="space-y-6">
-          <div className="space-y-3">
-            <Label>
+        <CardContent className="space-y-8">
+          <div className="space-y-4">
+            <Label className="text-base font-semibold">
               Condition of Equipment <span className="text-destructive">*</span>
             </Label>
             <RadioGroup
@@ -377,36 +395,47 @@ export function PreOpChecklistForm() {
               onValueChange={(value) =>
                 handleInputChange("equipmentCondition", value as "ok" | "requires_attention")
               }
-              className="flex gap-4"
+              className="grid grid-cols-1 sm:grid-cols-2 gap-3"
             >
-              <div className="flex items-center space-x-2">
-                <RadioGroupItem value="ok" id="condition-ok" />
-                <Label htmlFor="condition-ok" className="cursor-pointer font-normal">
-                  ✓ OK
-                </Label>
-              </div>
-              <div className="flex items-center space-x-2">
-                <RadioGroupItem value="requires_attention" id="condition-attention" />
-                <Label htmlFor="condition-attention" className="cursor-pointer font-normal">
-                  ⚠ Requires Attention
-                </Label>
-              </div>
+              <label
+                htmlFor="condition-ok"
+                className={`flex items-center gap-4 p-4 rounded-lg border-2 cursor-pointer transition-all active:scale-[0.98] ${
+                  formData.equipmentCondition === "ok"
+                    ? "bg-green-500/20 border-green-500"
+                    : "bg-muted/30 border-transparent hover:border-muted-foreground/20"
+                }`}
+              >
+                <RadioGroupItem value="ok" id="condition-ok" className="h-6 w-6" />
+                <span className="text-lg font-medium">✓ OK</span>
+              </label>
+              <label
+                htmlFor="condition-attention"
+                className={`flex items-center gap-4 p-4 rounded-lg border-2 cursor-pointer transition-all active:scale-[0.98] ${
+                  formData.equipmentCondition === "requires_attention"
+                    ? "bg-warning/20 border-warning"
+                    : "bg-muted/30 border-transparent hover:border-muted-foreground/20"
+                }`}
+              >
+                <RadioGroupItem value="requires_attention" id="condition-attention" className="h-6 w-6" />
+                <span className="text-lg font-medium">⚠ Requires Attention</span>
+              </label>
             </RadioGroup>
           </div>
 
-          <div className="space-y-2">
-            <Label htmlFor="comments">Comments/Observations</Label>
+          <div className="space-y-3">
+            <Label htmlFor="comments" className="text-base font-semibold">Comments/Observations</Label>
             <Textarea
               id="comments"
               placeholder="Additional items requiring attention. Note routine maintenance."
               value={formData.comments}
               onChange={(e) => handleInputChange("comments", e.target.value)}
-              rows={3}
+              rows={4}
+              className="text-lg p-4 min-h-[120px]"
             />
           </div>
 
-          <div className="space-y-3">
-            <Label>
+          <div className="space-y-4">
+            <Label className="text-base font-semibold">
               Action Taken <span className="text-destructive">*</span>
             </Label>
             <RadioGroup
@@ -414,35 +443,45 @@ export function PreOpChecklistForm() {
               onValueChange={(value) =>
                 handleInputChange("actionTaken", value as "cleared" | "reported")
               }
-              className="flex gap-4"
+              className="grid grid-cols-1 sm:grid-cols-2 gap-3"
             >
-              <div className="flex items-center space-x-2">
-                <RadioGroupItem value="cleared" id="action-cleared" />
-                <Label htmlFor="action-cleared" className="cursor-pointer font-normal">
-                  ✓ Equipment Cleared
-                </Label>
-              </div>
-              <div className="flex items-center space-x-2">
-                <RadioGroupItem value="reported" id="action-reported" />
-                <Label htmlFor="action-reported" className="cursor-pointer font-normal">
-                  🔧 Reported for Maintenance
-                </Label>
-              </div>
+              <label
+                htmlFor="action-cleared"
+                className={`flex items-center gap-4 p-4 rounded-lg border-2 cursor-pointer transition-all active:scale-[0.98] ${
+                  formData.actionTaken === "cleared"
+                    ? "bg-green-500/20 border-green-500"
+                    : "bg-muted/30 border-transparent hover:border-muted-foreground/20"
+                }`}
+              >
+                <RadioGroupItem value="cleared" id="action-cleared" className="h-6 w-6" />
+                <span className="text-lg font-medium">✓ Equipment Cleared</span>
+              </label>
+              <label
+                htmlFor="action-reported"
+                className={`flex items-center gap-4 p-4 rounded-lg border-2 cursor-pointer transition-all active:scale-[0.98] ${
+                  formData.actionTaken === "reported"
+                    ? "bg-orange-500/20 border-orange-500"
+                    : "bg-muted/30 border-transparent hover:border-muted-foreground/20"
+                }`}
+              >
+                <RadioGroupItem value="reported" id="action-reported" className="h-6 w-6" />
+                <span className="text-lg font-medium">🔧 Reported for Maintenance</span>
+              </label>
             </RadioGroup>
           </div>
         </CardContent>
       </Card>
 
-      {/* Submit Button */}
-      <div className="flex gap-3">
+      {/* Submit Button - Extra large for gloved hands */}
+      <div className="flex gap-4">
         <Button
           type="submit"
-          className="flex-1 h-12 text-lg font-semibold"
+          className="flex-1 h-16 text-xl font-bold"
           disabled={isSubmitting}
         >
           {isSubmitting ? (
             <>
-              <span className="animate-spin mr-2">⏳</span>
+              <span className="animate-spin mr-3 text-2xl">⏳</span>
               Submitting...
             </>
           ) : (
@@ -453,14 +492,14 @@ export function PreOpChecklistForm() {
           type="button"
           variant="outline"
           onClick={resetForm}
-          className="h-12"
+          className="h-16 px-6 text-lg font-semibold"
         >
           Clear
         </Button>
       </div>
 
       {/* Footer */}
-      <p className="text-xs text-center text-muted-foreground">
+      <p className="text-sm text-center text-muted-foreground py-4">
         Do not submit passwords through this form.
       </p>
     </form>
